@@ -1,0 +1,59 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  .label{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+  }
+  .EmailAddress{
+    width: 330px;
+    border: 1px solid  #1B2B41B8;
+    border-radius:4px ;
+    padding: 15px;
+    cursor: pointer;
+  }
+  .passwordbloc{
+    width: 330px;
+    border: 1px solid  #1B2B41B8;
+    border-radius:4px ;
+    padding: 15px;
+    cursor: pointer;
+  }
+  .password{
+    border: none;
+  }
+ .title{
+    font-size: 15px;
+    color:#1B2B41B8;
+  }
+  .Add{
+    width: 330px;
+    color: white;
+    font-size: 20px;
+    border: none;
+    padding: 13px;
+    border-radius: 4px;
+    background: rgba(22, 118, 243, 1);
+    cursor: pointer;
+  }
+  .error{
+    color: red;
+    font-weight: 800;
+    margin: 0 0 0 2px;
+  }
+  .EmailAddress:hover{
+    border: 1px solid #1E90FF;
+    transition-duration: 15cek;
+  }
+  .passwordbloc:hover, .passwordbloc + .title  {
+    border: 1px solid #1E90FF;
+    color: #1E90FF;
+    transition-duration: 15cek;
+
+  }
+
+}
