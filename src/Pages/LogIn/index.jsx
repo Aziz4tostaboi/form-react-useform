@@ -15,7 +15,7 @@ const LogIn=()=>{
                     text="Welcome back , please enter your detalis"
                 />
                 <GoogleComponent/>
-                <InputComponent EmailAddress="Emaill Adress" password="Password"/>
+                <InputComponent/>
                 <LinkComponent title="Don`t have an account " to="/signin" link="Sign ap"/>
             </div>
         </div>

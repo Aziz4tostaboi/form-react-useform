@@ -1,74 +1,109 @@
-
-import React from "react";
+import React, {useState} from "react";
 import {useForm} from "react-hook-form";
+import *as yup from "yup"
+import {yupResolver} from "@hookform/resolvers/yup";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "./styles.module.scss"
-import Chekbox from "../chekbox";
-import {App} from "antd";
-const SignUpComponents=(props)=>{
+import { Checkbox } from 'antd';
+
+const SignUpComponents=()=>{
+    const [showPassword, setShowPassword] = useState(false);
+
+    const schema=yup.object().shape({
+        fullName:yup.string().required().min(4,"email is too short ").max(10,"email is too long"),
+        password:yup.string().required().min(4,"too short ").max(10,"too long password"),
+        EmailAddress:yup.string().required().min(4,"email is too short ").max(10,"email is too long"),
+        passwordConfrim:yup.string().required().min(4,"too short ").max(10,"too long password"),
+    })
+
     const {
         register,
         handleSubmit,
         formState:{
-        errors
-    },
-    }=useForm()
-    const {
-    label,
-    }=props
+            errors
+        }
+    }=useForm({
+        resolver:yupResolver(schema),
+    })
 
+
+    const Onsubmit=(data)=>{
+        console.log(data)
+    }
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
     return(
         <div>
-            <form className={styles['container']}
-                onSubmit={handleSubmit(data => (
-                    console.log(data)
-                ))}
-            >
-                <label >
-                    <h1 className={styles['title']}>Full Name</h1>
-                    <input className={styles['input']} {...register("FullName",{
-                        required:"This field is required for ignition",
-                        maxLength:{
-                            value:4,
-                            message:"ee"
-                        }
-                    })}/>
-                    <p className={styles['error']}>{errors.FullName?.message}</p>
-                </label>
-                <label >
-                    <h1 className={styles['title']}>EmailAddress</h1>
-                    <input className={styles['input']}{...register("EmailAddress",{
-                                required:"This field is required for ignition",
-                                maxLength:{
-                                    value:4,
-                                    message:"error"
-                                }
-                          })}/>
-                    <p className={styles['error']}>{errors.EmailAddress?.message}</p>
-                </label>
-                <label >
-                    <h1 className={styles['title']}>Password</h1>
-                    <input className={styles['input']}{...register("Password",{
-                        required:"Choose security password",
-                        maxLength:{
-                            value:4,
-                            message:"error"
-                        }
-                    })}/>
-                    <p className={styles['error']}>{errors.Password?.message}</p>
-                </label>
-                <label >
-                    <h1  className={styles['title']}>Confirm Password</h1>
-                    <input className={styles['input']}{...register("passwordConfrim",{
-                        required:"passwords don't match",
-                        maxLength:{
-                            value:4,
-                            message:"error"
-                        }
-                    })}/>
-                   <p className={styles['error']}>{errors.passwordConfrim?.message}</p>
-                </label>
-                <Chekbox text="I have read and agree to the" link="Terms of Service"/>
-                <button type="submit"  className={styles['button']}>Get Started</button>
+            <form onSubmit={handleSubmit(Onsubmit)} className={styles['form-container']}>
+
+                <p className={styles['label']} style={{color:errors.fullName&&"red"}}>Email Address</p>
+                <input
+                    className={styles['emailaddres']}
+                    type="text"
+                    placeholder="fullName"
+                    {...register("fullName")}
+                    style={{ borderColor: errors.fullName && "red" }}
+                />
+                <p className={styles['error']}>{errors.fullName?.message}</p>
+
+
+                <p className={styles['label']} style={{color:errors.EmailAddress&&"red"}}>Email Address</p>
+                <input
+                    className={styles['emailaddres']}
+                    type="text"
+                    placeholder="emailaddres"
+                    {...register("EmailAddress")}
+                    style={{ borderColor: errors.EmailAddress && "red" }}
+                />
+                <p className={styles['error']}>{errors.EmailAddress?.message}</p>
+
+
+                <div style={{ position: "relative" }}>
+                    <p className={styles['label']} style={{color:errors.password&&"red"}}>Password</p>
+                    <input
+                        className={styles['password']}
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
+                        {...register("password")}
+                        style={{ borderColor: errors.password && "red" }}
+                    />
+                    <span
+                        className={styles['icon-yea']}
+                        onClick={togglePasswordVisibility}
+                    >
+                     {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                </div>
+
+                <p className={styles['error']}>{errors.password?.message}</p>
+
+                <div style={{ position: "relative" }}>
+                    <p className={styles['label']} style={{color:errors.password&&"red"}}>Password</p>
+                    <input
+                        className={styles['password']}
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
+                        {...register("passwordConfrim")}
+                        style={{ borderColor: errors.passwordConfrim && "red" }}
+                    />
+                    <span
+                        className={styles['icon-yea']}
+                        onClick={togglePasswordVisibility}
+                    >
+                     {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                </div>
+
+                <p className={styles['error']}>{errors.passwordConfrim?.message}</p>
+
+                <div className={styles.box}>
+                    <Checkbox ></Checkbox>
+                    <a  className={styles['remeber']}>Remember mi</a>
+                    <p className={styles['Forgat']}>Forgat Password</p>
+                </div>
+                <button className={styles['button']} type="submit">Sign ap</button>
             </form>
         </div>
     )
